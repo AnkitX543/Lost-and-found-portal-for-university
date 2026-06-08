@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Search with ChatGPT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background: #f2f2f2;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 30px;
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Anything</h1>
+    <input type="text" id="searchInput" placeholder="Enter a keyword like 'mango'..." />
+    <button onclick="searchInfo()">Search</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function searchInfo() {
+            const input = document.getElementById("searchInput").value;
+            if (!input) return;
+
+            const res = await fetch("http://localhost:5000/search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ keyword: input })
+            });
+
+            const data = await res.json();
+            document.getElementById("result").innerText = data.response;
+        }
+    </script>
+</body>
+</html>
